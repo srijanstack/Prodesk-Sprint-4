@@ -1,4 +1,4 @@
-function Input({ name, id, placeholder }) {
+function Input({ name, id, ...rest }) {
   return (
     <>
       <div>
@@ -6,11 +6,11 @@ function Input({ name, id, placeholder }) {
           {name}
         </label>
         <input
-          placeholder={`${placeholder}`}
           className="p-2 h-12 w-120 border-gray-400 border rounded-xl outline-purple-500 block"
           type="text"
           name={`${id}`}
           id={`${id}`}
+          {...rest}
         />
       </div>
     </>
