@@ -1,7 +1,8 @@
 import Input from "./Input";
 import { useState } from "react";
+import { extractTextFromPDF } from "../utils/extractTextFromPDF";
 
-function Form({handleSubmit}) {
+function Form({ handleFormSubmit, handlePdfSubmit }) {
   const [formData, setFormData] = useState({
     candidateName: "",
     jobRole: "",
@@ -9,15 +10,29 @@ function Form({handleSubmit}) {
     skills: "",
   });
 
-  //   const [resumeFile, setResumeFile] = useState(null);
+  const [resumeFile, setResumeFile] = useState(null);
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   }
+  function handleFileChange(e) {
+    setResumeFile(e.target.files[0]);
+  }
 
   async function handleClick(e) {
     e.preventDefault();
-    handleSubmit(formData);
+
+    if (resumeFile) {
+      const data = await extractTextFromPDF(resumeFile);
+      handlePdfSubmit(data);
+      return;
+    }
+    if (!formData.candidateName || !formData.skills) {
+      alert("Fill the form or upload resume");
+
+      return;
+    }
+    handleFormSubmit(formData);
   }
 
   return (
@@ -33,23 +48,7 @@ function Form({handleSubmit}) {
           placeholder={"e.g. John Doe"}
           value={formData.candidateName}
           onChange={handleChange}
-          required
-        />
-        <Input
-          id="jobRole"
-          name={"Job Role"}
-          placeholder={"e.g. Full Stack Dev, Business Analyst"}
-          value={formData.jobRole}
-          onChange={handleChange}
-          required
-        />
-        <Input
-          id="tgtComp"
-          name={"Target Company"}
-          value={formData.tgtComp}
-          placeholder={"e.g. Microsoft, Adobe, Google"}
-          onChange={handleChange}
-          required
+          required={!resumeFile}
         />
         <Input
           id="skills"
@@ -57,7 +56,21 @@ function Form({handleSubmit}) {
           value={formData.skills}
           placeholder={"e.g. Javascript, React, Power BI"}
           onChange={handleChange}
-          required
+          required={!resumeFile}
+        />
+        <Input
+          id="jobRole"
+          name={"Job Role (optional)"}
+          placeholder={"e.g. Full Stack Dev, Business Analyst"}
+          value={formData.jobRole}
+          onChange={handleChange}
+        />
+        <Input
+          id="tgtComp"
+          name={"Target Company (optional)"}
+          value={formData.tgtComp}
+          placeholder={"e.g. Microsoft, Adobe, Google"}
+          onChange={handleChange}
         />
 
         <hr className="text-gray-400 my-3" />
@@ -82,7 +95,11 @@ function Form({handleSubmit}) {
               type="file"
               accept=".pdf"
               className="hidden"
+              onChange={handleFileChange}
             />
+            <p className="text-sm text-purple-500 mt-2">
+              {resumeFile ? resumeFile.name : ""}
+            </p>
           </label>
         </div>
         <button

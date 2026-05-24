@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import Form from "./components/Form";
 import Letter from "./components/Letter";
-import { generateCoverLetter } from "./services/geminiAPI";
+import { generateCoverLetterForm, generateCoverLetterPdf } from "./services/geminiAPI";
 import { useState } from "react";
 
 function App() {
@@ -9,11 +9,27 @@ function App() {
   const [letter, setLetter] = useState("");
   const [error, setError] = useState("");
 
-  async function handleSubmit(formData) {
+  async function handleFormSubmit(formData) {
     try {
       setLoading(true);
-      const data = await generateCoverLetter(formData);
+      const data = await generateCoverLetterForm(formData);
       if (!data) return console.log("no data");
+      setLetter(data);
+    } catch (err) {
+      setLoading(true);
+      console.error(err);
+      setError(err.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handlePdfSubmit(pdfData) {
+    try {
+      setLoading(true);
+      const data = await generateCoverLetterPdf(pdfData);
+      if (!data) return console.log("no data");
+      console.log("reached letter")
       setLetter(data);
     } catch (err) {
       setLoading(true);
@@ -39,7 +55,7 @@ function App() {
           <span>powered by gemini</span>
         </section>
         <div className="flex gap-3  items-stretch min-h-150">
-          <Form handleSubmit={handleSubmit} />
+          <Form handleFormSubmit={handleFormSubmit} handlePdfSubmit={handlePdfSubmit}/>
           <Letter loading={loading} letter={letter} error={error} />
         </div>
       </div>
