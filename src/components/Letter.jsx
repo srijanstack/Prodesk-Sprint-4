@@ -1,7 +1,8 @@
 import Loader from "./Loading";
 import Markdown from "react-markdown";
+import { Ban } from "lucide-react";
 
-function Letter({ loading, letter }) {
+function Letter({ loading, letter, error }) {
   return (
     <>
       <div className="flex flex-col w-full h-160 border rounded-xl bg-white border-gray-300 shadow-xl">
@@ -10,9 +11,13 @@ function Letter({ loading, letter }) {
         </div>
         {loading ? (
           <Loader />
+        ) : error ? (
+          <div className="h-full w-full flex items-center justify-center p-4">
+            <Ban size={80} className="text-red-400" />
+            <p className="text-3xl font-medium text-red-400">{error}</p>
+          </div>
         ) : letter ? (
           <div className="text-lg h-full w-full p-4 overflow-auto text-gray-700">
-          
             <Markdown>{letter}</Markdown>
           </div>
         ) : (
