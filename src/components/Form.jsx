@@ -1,8 +1,7 @@
 import Input from "./Input";
 import { useState } from "react";
-import { generateCoverLetter } from "../services/geminiAPI";
 
-function Form() {
+function Form({handleSubmit}) {
   const [formData, setFormData] = useState({
     candidateName: "",
     jobRole: "",
@@ -16,24 +15,16 @@ function Form() {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   }
 
-  async function handleSubmit(e) {
+  async function handleClick(e) {
     e.preventDefault();
-    try {
-      console.log("caller data1");
-      const data = await generateCoverLetter(formData);
-      console.log("caller data2");
-      console.log(data)
-      if (!data) console.log("no data");
-    } catch (err) {
-      console.error(err);
-    }
+    handleSubmit(formData);
   }
 
   return (
     <>
       <form
-        onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col p-4 border border-gray-300 rounded-xl gap-3 w-fit bg-white shadow-lg"
+        onSubmit={(e) => handleClick(e)}
+        className="flex flex-col p-4 border border-gray-300 rounded-xl gap-3 w-fit bg-white shadow-lg max-h-160"
       >
         <h1 className="text-xl font-semibold ml-8">Your Details</h1>
         <Input
