@@ -1,3 +1,5 @@
+import Loader from "./Loading";
+
 function Letter() {
   return (
     <>
@@ -8,6 +10,7 @@ function Letter() {
         <div className="h-full w-full flex items-center justify-center p-4">
           <p className="text-2xl text-gray-500">No Content Here</p>
         </div>
+        <Loader/>
       </div>
     </>
   );

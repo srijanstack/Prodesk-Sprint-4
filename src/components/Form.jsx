@@ -1,5 +1,6 @@
 import Input from "./Input";
 import { useState } from "react";
+import { generateCoverLetter } from "../services/geminiAPI";
 
 function Form() {
   const [formData, setFormData] = useState({
@@ -12,20 +13,27 @@ function Form() {
   //   const [resumeFile, setResumeFile] = useState(null);
 
   function handleChange(e) {
-    setFormData({ ...formData, [e.target.id]: e.target.value })
- }
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  }
 
-
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(formData);
+    try {
+      console.log("caller data1");
+      const data = await generateCoverLetter(formData);
+      console.log("caller data2");
+      console.log(data)
+      if (!data) console.log("no data");
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   return (
     <>
       <form
         onSubmit={(e) => handleSubmit(e)}
-        className="flex flex-col p-4 border border-gray-300 rounded-xl gap-3 w-fit bg-white"
+        className="flex flex-col p-4 border border-gray-300 rounded-xl gap-3 w-fit bg-white shadow-lg"
       >
         <h1 className="text-xl font-semibold ml-8">Your Details</h1>
         <Input
@@ -56,7 +64,7 @@ function Form() {
           id="skills"
           name={"Skills"}
           value={formData.skills}
-          placeholder={"e.g. =Javascript, React, Power BI"}
+          placeholder={"e.g. Javascript, React, Power BI"}
           onChange={handleChange}
           required
         />
