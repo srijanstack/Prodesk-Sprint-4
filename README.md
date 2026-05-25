@@ -1,16 +1,53 @@
-# React + Vite
+# Ai cover letter generator
+This project is part of the Prodesk IT internship
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
 
-Currently, two official plugins are available:
+# Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## AI-Powered Cover Letter Generation
+- Generates professional cover letters dynamically using Google Gemini API
+- ATS-friendly formatting
+- Markdown-based output rendering
+- Personalized responses based on user inputs
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Dual Input System
 
-## Expanding the ESLint configuration
+### Manual Form Input
+Users can manually enter:
+- Candidate Name
+- Skills
+- Job Role
+- Target Company
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Resume Upload Support
+Users can upload their resume in PDF format.
+
+The application:
+- Extracts raw text from the PDF
+- Sends extracted resume context to Gemini AI
+- Generates a highly contextualized cover letter automatically
+
+---
+
+# Tech Stack
+
+## Frontend
+- React
+- Tailwind CSS
+- Lucide React Icons
+
+## AI
+- Google Gemini API (`gemini-2.5-flash`)
+
+## PDF Processing
+- pdfjs-dist
+
+---
+
+# Preview
+
+![preview1](Preview/Screenshot%202026-05-25%20120151.png)
+

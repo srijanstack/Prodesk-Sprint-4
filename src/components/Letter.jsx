@@ -23,7 +23,7 @@ function Letter({ loading, letter, error }) {
 
           <button
             onClick={handleCopy}
-            className="px-4 py-2 rounded-lg  text-purple-500 font-medium text-sm hover:opacity-90 transition"
+            className="px-4 py-2 rounded-lg  text-purple-500  text-sm hover:opacity-90 transition"
           >
             {copied ? <Check size={18} /> : <Copy size={18} />}
           </button>

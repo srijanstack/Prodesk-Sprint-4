@@ -7,9 +7,9 @@ export async function generateCoverLetterForm(formData) {
 Generate a **professional, concise, and compelling cover letter** in clean markdown format for the following candidate:
 
 - **Candidate Name**: ${formData.candidateName}
-- **Job Role**: ${formData.jobRole}
-- **Target Company**: ${formData.targetCompany}
-- **Key Skills/Experience**: ${formData.skills || "Not provided"}
+- **Job Role**: ${formData.jobRole || "Not provided"}
+- **Target Company**: ${formData.tgtComp || "Not provided"}
+- **Key Skills/Experience**: ${formData.skills }
 
 Requirements:
 - Use proper paragraph structure
